@@ -6,3 +6,9 @@ test('renders an empty todo list message', () => {
   render(<App />);
   expect(screen.getByText(/no todos/i)).toBeInTheDocument();
 });
+
+test('renders the todo list', () => {
+  const list = screen.getByRole('list'); // <ul> has role="list"
+
+  expect(list).toBeInTheDocument();
+})
