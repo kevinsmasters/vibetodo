@@ -11,4 +11,9 @@ test('renders the todo list', () => {
   const list = screen.getByRole('list'); // <ul> has role="list"
 
   expect(list).toBeInTheDocument();
+
+  const items = screen.getAllByRole('listitem'); // <li> has role="listitem"
+
+  expect(items).toHaveLength(2);
+  expect(screen.getByText('Buy milk')).toBeInTheDocument();
 })
