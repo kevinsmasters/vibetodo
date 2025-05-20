@@ -1,7 +1,12 @@
 import './App.css'
 import { useState } from 'react';
 import TodoItem from './components/TodoItem';
-import type {Todo} from './types/todoTypes';
+
+type Todo = {
+  id: number;
+  text: string;
+  completed?: boolean;
+};
 
 type AppProps = {
   initialTodos?: Todo[];
@@ -16,7 +21,7 @@ function App({ initialTodos = [] }: AppProps) {
     if (!input.trim()) return;
     setTodos(prev => [
       ...prev,
-      { id: Date.now(), text: input.trim() },
+      { id: Date.now(), text: input.trim(), completed: false },
     ]);
     setInput('');
   }
@@ -34,7 +39,21 @@ function App({ initialTodos = [] }: AppProps) {
       {todos.length > 0 ? (
         <ul>
         {todos.map(todo => (
-          <TodoItem key={todo.id} text={todo.text} />
+          <TodoItem
+            key={todo.id}
+            text={todo.text}
+            completed={todo.completed ?? false}
+            onToggle={() =>
+              setTodos(prev => 
+                prev.map(t =>
+                  t.id === todo.id ? { ...t, completed: !t.completed } : t
+                )
+              )
+            }
+            onDelete={() =>
+              setTodos(prev => prev.filter(t => t.id !== todo.id))
+            }
+          />
         ))}
       </ul>
       ) : (

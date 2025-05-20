@@ -3,6 +3,11 @@ import { render, screen } from '@testing-library/react';
 import TodoItem from './TodoItem';
 
 test('renders a todo item with text', () => {
-  render(<TodoItem text="Buy milk" />);
+  render(
+    <TodoItem
+      text="Buy milk"
+      completed={false}
+      onToggle={()=> (false)}
+    />);
   expect(screen.getByText('Buy milk')).toBeInTheDocument();
 });
