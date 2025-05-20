@@ -3,13 +3,19 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
-test.skip('renders an empty todo list message', () => {
-  render(<App />);
+test('renders an empty todo list message', () => {
+  render(<App initialTodos={[]} />);
   expect(screen.getByText(/no todos/i)).toBeInTheDocument();
 });
 
 test('renders the todo list', () => {
-  render(<App />);
+  render(
+    <App
+      initialTodos={[
+        { id: 1, text: 'Buy milk' },
+        { id: 2, text: 'Write code' },
+      ]}
+    />);
 
   const list = screen.getByRole('list'); // <ul> has role="list"
 

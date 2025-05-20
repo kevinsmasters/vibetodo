@@ -1,18 +1,14 @@
 import './App.css'
 import { useState } from 'react';
 import TodoItem from './components/TodoItem';
+import type {Todo} from './types/todoTypes';
 
-type Todo = {
-  id: number;
-  text: string;
+type AppProps = {
+  initialTodos?: Todo[];
 };
-/* TODO:combine types used here and in the TodoItem */
 
-function App() {
-  const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, text: 'Buy milk' },
-    { id: 2, text: 'Write code' },
-  ]);
+function App({ initialTodos = [] }: AppProps) {
+  const [todos, setTodos] = useState<Todo[]>(initialTodos);
 
   const [input, setInput] = useState('');
 
@@ -35,7 +31,7 @@ function App() {
         />
         <button onClick={addTodo}>Add</button>
       </div>
-      {todos ? (
+      {todos.length > 0 ? (
         <ul>
         {todos.map(todo => (
           <TodoItem key={todo.id} text={todo.text} />
