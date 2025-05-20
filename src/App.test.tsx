@@ -28,7 +28,11 @@ test('renders the todo list', () => {
 });
 
 test('allows user to add a new todo', async () => {
-  render(<App />);
+  render(
+    <App
+      initialTodos={[]}
+    />
+  );
 
   const input = screen.getByPlaceholderText(/add a new todo/i);
   const button = screen.getByRole('button', { name: /add/i });
@@ -37,8 +41,7 @@ test('allows user to add a new todo', async () => {
   await userEvent.click(button);
 
   // Now it should be in the list
-  const items = screen.getAllByRole('listitem');
-  expect(items.map((li) => li.textContent)).toContain('Walk the dog');
+  expect(screen.getByText('Walk the dog')).toBeInTheDocument();
 });
 
 test('allows user to mark a todo as completed', async () => {
