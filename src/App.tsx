@@ -14,7 +14,6 @@ function App() {
       {todos ? (
         <ul>
         {todos.map(todo => (
-          // <li key={todo.id}>{todo.text}</li>
           <TodoItem key={todo.id} text={todo.text} />
         ))}
       </ul>
