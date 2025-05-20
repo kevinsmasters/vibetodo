@@ -40,3 +40,22 @@ test('allows user to add a new todo', async () => {
   const items = screen.getAllByRole('listitem');
   expect(items.map((li) => li.textContent)).toContain('Walk the dog');
 });
+
+test('allows user to mark a todo as completed', async () => {
+  render(
+    <App
+      initialTodos={[
+        { id: 1, text: 'Buy milk' },
+      ]}
+    />
+  );
+
+  const checkbox = screen.getByRole('checkbox', { name: /buy milk/i });
+  expect(checkbox).not.toBeChecked();
+
+  await userEvent.click(checkbox);
+
+  expect(checkbox).toBeChecked();
+  const item = screen.getByText('Buy milk');
+  expect(item).toHaveStyle('text-decoration: line-through');
+})
