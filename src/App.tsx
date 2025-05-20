@@ -1,28 +1,20 @@
 import './App.css'
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import TodoItem from './components/TodoItem';
-
-type Todo = {
-  id: number;
-  text: string;
-  completed?: boolean;
-};
+import { todoReducer } from './todoReducer';
+import type { Todo } from './todoReducer';
 
 type AppProps = {
   initialTodos?: Todo[];
 };
 
 function App({ initialTodos = [] }: AppProps) {
-  const [todos, setTodos] = useState<Todo[]>(initialTodos);
-
+  const [todos, dispatch] = useReducer(todoReducer, initialTodos);
   const [input, setInput] = useState('');
 
   const addTodo = () => {
     if (!input.trim()) return;
-    setTodos(prev => [
-      ...prev,
-      { id: Date.now(), text: input.trim(), completed: false },
-    ]);
+    dispatch({ type: 'ADD_TODO', payload: input.trim() });
     setInput('');
   }
   return (
@@ -43,16 +35,8 @@ function App({ initialTodos = [] }: AppProps) {
             key={todo.id}
             text={todo.text}
             completed={todo.completed ?? false}
-            onToggle={() =>
-              setTodos(prev => 
-                prev.map(t =>
-                  t.id === todo.id ? { ...t, completed: !t.completed } : t
-                )
-              )
-            }
-            onDelete={() =>
-              setTodos(prev => prev.filter(t => t.id !== todo.id))
-            }
+            onToggle={() => dispatch({ type: 'TOGGLE_TODO', payload: todo.id })}
+            onDelete={() => dispatch({ type: 'DELETE_TODO', payload: todo.id })}
           />
         ))}
       </ul>
