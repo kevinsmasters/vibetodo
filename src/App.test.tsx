@@ -1,5 +1,6 @@
 import { test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
 
 test.skip('renders an empty todo list message', () => {
@@ -18,4 +19,18 @@ test('renders the todo list', () => {
 
   expect(items).toHaveLength(2);
   expect(screen.getByText('Buy milk')).toBeInTheDocument();
-})
+});
+
+test('allows user to add a new todo', async () => {
+  render(<App />);
+
+  const input = screen.getByPlaceholderText(/add a new todo/i);
+  const button = screen.getByRole('button', { name: /add/i });
+
+  await userEvent.type(input, 'Walk the dog');
+  await userEvent.click(button);
+
+  // Now it should be in the list
+  const items = screen.getAllByRole('listitem');
+  expect(items.map((li) => li.textContent)).toContain('Walk the dog');
+});
