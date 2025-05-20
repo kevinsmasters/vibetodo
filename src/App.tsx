@@ -50,6 +50,9 @@ function App({ initialTodos = [] }: AppProps) {
                 )
               )
             }
+            onDelete={() =>
+              setTodos(prev => prev.filter(t => t.id !== todo.id))
+            }
           />
         ))}
       </ul>

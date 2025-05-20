@@ -58,4 +58,27 @@ test('allows user to mark a todo as completed', async () => {
   expect(checkbox).toBeChecked();
   const item = screen.getByText('Buy milk');
   expect(item).toHaveStyle('text-decoration: line-through');
-})
+});
+
+test('allows user to delete a todo', async () => {
+  render(
+    <App
+      initialTodos={[
+        { id: 1, text: 'Buy milk' },
+        { id: 2, text: 'Write code' },
+      ]}
+    />
+  );
+
+  // Ensure both todos are in the list
+  expect(screen.getByText('Buy milk')).toBeInTheDocument();
+  expect(screen.getByText('Write code')).toBeInTheDocument();
+
+  // Click the delete button for 'Buy milk'
+  const deleteButton = screen.getByRole('button', { name: /delete buy milk/i });
+  await userEvent.click(deleteButton);
+
+  // 'Buy milk' should be removed
+  expect(screen.queryByText('Buy milk')).not.toBeInTheDocument();
+  expect(screen.getByText('Write code')).toBeInTheDocument();
+});

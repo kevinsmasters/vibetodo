@@ -2,9 +2,10 @@ type TodoItemProps = {
   text: string;
   completed: boolean;
   onToggle: () => void;
+  onDelete: () => void;
 };
 
-const TodoItem = ({ text, completed, onToggle }: TodoItemProps) => {
+const TodoItem = ({ text, completed, onToggle, onDelete }: TodoItemProps) => {
   return (
     <li>
       <label style={{ textDecoration: completed ? 'line-through' : 'none' }}>
@@ -15,6 +16,9 @@ const TodoItem = ({ text, completed, onToggle }: TodoItemProps) => {
         />
         {text}
       </label>
+      <button onClick={onDelete} aria-label={`Delete ${text}`}>
+        Delete
+      </button>
     </li>);
 }
 
