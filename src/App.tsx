@@ -1,12 +1,7 @@
 import './App.css'
 import { useState } from 'react';
 import TodoItem from './components/TodoItem';
-
-type Todo = {
-  id: number;
-  text: string;
-};
-/* TODO:combine types used here and in the TodoItem */
+import type {Todo} from './types/todoTypes';
 
 type AppProps = {
   initialTodos?: Todo[];
