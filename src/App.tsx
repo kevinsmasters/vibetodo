@@ -1,16 +1,16 @@
 import './App.css'
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import TodoItem from './components/TodoItem';
 import { todoReducer } from './todoReducer';
-import type { Todo } from './todoReducer';
+import { loadTodos, saveTodos } from './storage';
 
-type AppProps = {
-  initialTodos?: Todo[];
-};
-
-function App({ initialTodos = [] }: AppProps) {
-  const [todos, dispatch] = useReducer(todoReducer, initialTodos);
+function App() {
+  const [todos, dispatch] = useReducer(todoReducer, [], loadTodos);
   const [input, setInput] = useState('');
+
+  useEffect(() => {
+    saveTodos(todos);
+  }, [todos])
 
   const addTodo = () => {
     if (!input.trim()) return;
