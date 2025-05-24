@@ -18,7 +18,7 @@ function App() {
     setInput('');
   }
   return (
-    <div className="bg-gray-200">
+    <div className="bg-gray-200 py-8">
       <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
         <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
           <div className="mb-4">
@@ -39,7 +39,10 @@ function App() {
             >Add</button>
           </div>
           <div>
-            <button onClick={() => dispatch({ type: 'TOGGLE_ALL' })}>
+            <button
+              className="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal"
+              onClick={() => dispatch({ type: 'TOGGLE_ALL' })}
+              >
               Toggle All
             </button>
           </div>

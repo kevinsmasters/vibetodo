@@ -28,7 +28,7 @@ test('deletes a todo by id', () => {
 });
 
 test('toggles all todos', () => {
-  const action = { type: 'TOGGLE_ALL' as const, payload: 2 };
+  const action = { type: 'TOGGLE_ALL' as const };
   const result = todoReducer(initialTodos, action);
   expect(result[0].completed).toBe(true);
   expect(result[1].completed).toBe(true);
