@@ -1,5 +1,5 @@
 import { test, expect, beforeEach, describe } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -29,12 +29,15 @@ describe('App with localStorage', () => {
     const toggleAllButton = screen.getByRole('button', { name: /toggle all/i });
     await user.click(toggleAllButton);
 
-    const items = screen.getAllByRole('listitem');
-    items.forEach(item => {
-      expect(item).toHaveStyle('text-decoration: line-through');
+    await waitFor(async () => {
+      const listItems = screen.findAllByRole('listitem');
+      (await listItems).forEach(item => {
+        const label = item.querySelector('label')
+        expect(label).toHaveStyle('text-decoration: line-through');
+      });
     });
-    //MAYBE TODO: (prob not) add an opposite test to toggle off all
   });
+
 
   test('loads todos from localStorage on initial render', () => {
     const mockTodos = [
