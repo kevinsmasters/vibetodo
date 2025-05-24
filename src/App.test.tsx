@@ -15,6 +15,27 @@ describe('App with localStorage', () => {
     expect(screen.getByText(/no todos/i)).toBeInTheDocument();
   });
 
+  test('toggles all todos as completed', async () => {
+    const user = userEvent.setup();
+
+    const mockTodos = [
+      { id: 1, text: 'One', completed: false },
+      { id: 2, text: 'Two', completed: false },
+    ];
+    localStorage.setItem('todos', JSON.stringify(mockTodos));
+
+    render(<App />);
+
+    const toggleAllButton = screen.getByRole('button', { name: /toggle all/i });
+    await user.click(toggleAllButton);
+
+    const items = screen.getAllByRole('listitem');
+    items.forEach(item => {
+      expect(item).toHaveStyle('text-decoration: line-through');
+    });
+    //MAYBE TODO: (prob not) add an opposite test to toggle off all
+  });
+
   test('loads todos from localStorage on initial render', () => {
     const mockTodos = [
       { id: 1, text: 'Test localStorage', completed: false },

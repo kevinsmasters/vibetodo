@@ -26,3 +26,10 @@ test('deletes a todo by id', () => {
   expect(result).toHaveLength(1);
   expect(result[0].id).toBe(1);
 });
+
+test('toggles all todos', () => {
+  const action = { type: 'TOGGLE_ALL' as const, payload: 2 };
+  const result = todoReducer(initialTodos, action);
+  expect(result[0].completed).toBe(true);
+  expect(result[1].completed).toBe(true);
+});

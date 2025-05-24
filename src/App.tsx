@@ -28,6 +28,11 @@ function App() {
         />
         <button onClick={addTodo}>Add</button>
       </div>
+      <div>
+        <button onClick={() => dispatch({ type: 'TOGGLE_ALL' })}>
+          Toggle All
+        </button>
+      </div>
       {todos.length > 0 ? (
         <ul>
         {todos.map(todo => (
