@@ -8,6 +8,7 @@ test('renders a todo item with text', () => {
       text="Buy milk"
       completed={false}
       onToggle={()=> (false)}
+      onDelete={()=> (false)}
     />);
   expect(screen.getByText('Buy milk')).toBeInTheDocument();
 });

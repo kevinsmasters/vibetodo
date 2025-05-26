@@ -3,6 +3,7 @@ import { useEffect, useReducer, useState } from 'react';
 import TodoItem from './components/TodoItem';
 import { todoReducer } from './todoReducer';
 import { loadTodos, saveTodos } from './storage';
+import { ListChecks, CirclePlus } from 'lucide-react';
 
 function App() {
   type Filter = 'all' | 'active' | 'completed';
@@ -50,15 +51,21 @@ function App() {
             />
             <button 
               onClick={addTodo}
-              className="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal"  
-            >Add</button>
+              className="flex-no-shrink p-2 text-blue-600 hover:text-black cursor-pointer"  
+              aria-label="Add"
+              title="Add"
+            >
+              <CirclePlus size={ 32 } />
+            </button>
           </div>
           <div>
             <button
-              className="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal"
+              className="flex-no-shrink p-2 rounded text-teal-600 hover:text-black cursor-pointer ml-2 mt-4"
               onClick={() => dispatch({ type: 'TOGGLE_ALL' })}
+              aria-label="Toggle All"
+              title="Toggle All"
               >
-              Toggle All
+              <ListChecks size={16} />
             </button>
           </div>
           {todos.length > 0 ? (

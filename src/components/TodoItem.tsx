@@ -1,3 +1,5 @@
+import { Trash2 } from 'lucide-react';
+
 type TodoItemProps = {
   text: string;
   completed: boolean;
@@ -16,15 +18,16 @@ const TodoItem = ({ text, completed, onToggle, onDelete }: TodoItemProps) => {
           type="checkbox"
           checked={completed}
           onChange={onToggle}
-          className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-green"
+          className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green-600 border-green hover:bg-green"
         />
         {text}
       </label>
       <button
-        className="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red"
-        onClick={onDelete} aria-label={`Delete ${text}`}
+        className="flex-no-shrink p-2 ml-2 text-red-600 border-red hover:text-black hover:bg-red-100 rounded-2xl cursor-pointer"
+        onClick={onDelete}
+        aria-label={`Delete ${text}`}
       >
-        Delete
+        <Trash2 size={16} />
       </button>
     </li>);
 }
