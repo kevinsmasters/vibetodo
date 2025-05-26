@@ -122,4 +122,32 @@ describe('App with localStorage', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(stored.some((t: any) => t.text === 'Save me')).toBe(true);
   });
+
+  test('filters todo by status', async () => {
+    const user = userEvent.setup();
+
+    const todos = [
+    { id: 1, text: 'Buy milk', completed: false },
+    { id: 2, text: 'Walk dog', completed: true },
+  ];
+
+  localStorage.setItem('todos', JSON.stringify(todos));
+
+  render(<App />);
+
+  // Click "Active"
+  await user.click(screen.getByRole('button', { name: /active/i }));
+  expect(screen.getByText('Buy milk')).toBeInTheDocument();
+  expect(screen.queryByText('Walk dog')).not.toBeInTheDocument();
+
+  // Click "Completed"
+  await user.click(screen.getByRole('button', { name: /completed/i }));
+  expect(screen.getByText('Walk dog')).toBeInTheDocument();
+  expect(screen.queryByText('Buy milk')).not.toBeInTheDocument();
+
+  // Click "All"
+  await user.click(screen.getByRole('button', { name: "All" }));
+  expect(screen.getByText('Buy milk')).toBeInTheDocument();
+  expect(screen.getByText('Walk dog')).toBeInTheDocument();
+  });
 })

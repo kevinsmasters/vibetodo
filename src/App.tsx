@@ -5,6 +5,9 @@ import { todoReducer } from './todoReducer';
 import { loadTodos, saveTodos } from './storage';
 
 function App() {
+  type Filter = 'all' | 'active' | 'completed';
+
+  const [filter, setFilter] = useState<Filter>('all');
   const [todos, dispatch] = useReducer(todoReducer, [], loadTodos);
   const [input, setInput] = useState('');
 
@@ -17,6 +20,13 @@ function App() {
     dispatch({ type: 'ADD_TODO', payload: input.trim() });
     setInput('');
   }
+
+  const filteredTodos = todos.filter(todo => {
+    if (filter === 'active') return !todo.completed;
+    if (filter === 'completed') return todo.completed;
+    return true;
+  });
+
   return (
     <div className="bg-gray-200 py-8">
       <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
@@ -25,6 +35,11 @@ function App() {
             <h1 className="text-gray-darkest">
               Todo List
             </h1>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <button onClick={() => setFilter('all')}>All</button>
+            <button onClick={() => setFilter('active')}>Active</button>
+            <button onClick={() => setFilter('completed')}>Completed</button>
           </div>
           <div className="flex mt-4">
             <input
@@ -48,7 +63,7 @@ function App() {
           </div>
           {todos.length > 0 ? (
             <ul>
-            {todos.map(todo => (
+            {filteredTodos.map(todo => (
               <TodoItem
                 key={todo.id}
                 text={todo.text}
